@@ -14,8 +14,8 @@ app.use(cors());
 
 mongoose.connect("mongodb+srv://Nikunj:1234@cluster0.yxv4y.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0");
 
-
-
+const UserRoutes = require('./routes/user_routes');
+app.use("/api/user", UserRoutes);
 
 const PORT = 5001;
 app.listen(PORT, () => console.log('Server started at PORT : 5001'));
