@@ -17,5 +17,9 @@ mongoose.connect("mongodb+srv://Nikunj:1234@cluster0.yxv4y.mongodb.net/ecommerce
 const UserRoutes = require('./routes/user_routes');
 app.use("/api/user", UserRoutes);
 
+
+const CategoryRoutes = require('./routes/category_routes');
+app.use("/api/category", CategoryRoutes);
+
 const PORT = 5001;
 app.listen(PORT, () => console.log('Server started at PORT : 5001'));
