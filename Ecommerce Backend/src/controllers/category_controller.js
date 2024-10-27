@@ -25,6 +25,23 @@ const CategoryController = {
         } catch (ex) {
             return res.json({sucess : false , message: ex});
         }
+    },
+
+    fetchCategoryById : async function(req,res){
+
+        try {
+            const id = req.params.id;
+            const foundCategory = await CategoryModel.findById(id);
+
+            if (!foundCategory) {
+                return res.json({sucess : false , message: "Category not found!"});
+            }
+
+            return res.json({sucess : true , data : foundCategory});
+            
+        } catch (ex) {
+            return res.json({sucess : false , message: ex});
+        }
     }
 };
 

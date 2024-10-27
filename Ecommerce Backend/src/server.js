@@ -21,5 +21,8 @@ app.use("/api/user", UserRoutes);
 const CategoryRoutes = require('./routes/category_routes');
 app.use("/api/category", CategoryRoutes);
 
+const ProductRoutes = require('./routes/products_routes');
+app.use("/api/product", ProductRoutes);
+
 const PORT = 5001;
 app.listen(PORT, () => console.log('Server started at PORT : 5001'));

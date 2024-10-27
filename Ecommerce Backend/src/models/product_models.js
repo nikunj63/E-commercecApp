@@ -1,13 +1,16 @@
 const {Schema, model} = require('mongoose');
 
-const categorySchema = new Schema({
+const productSchema = new Schema({
+    category: {type: Schema.Types.ObjectId, ref: 'Category',required: true},
     title:{ type: String, required:[true,'']},
     description:{type: String , default:""},
+    price:{ type : Number,required:true},
+    image:{type : Array,default:[]},
     updatedOn: {type: Date},
     createdOn: {type: Date},
 
 });
-categorySchema.pre('save' ,function(next){
+productSchema.pre('save' ,function(next){
     this.updatedOn = new Date();
     this.createdOn = new Date();
 
@@ -15,7 +18,7 @@ categorySchema.pre('save' ,function(next){
     next();
 });
 
-categorySchema.pre(['update' , 'findOneAndUpdate','updateOne'], function(next){
+productSchema.pre(['update' , 'findOneAndUpdate','updateOne'], function(next){
     const update = this.getUpdate();
     delete update._id;
 
@@ -24,6 +27,6 @@ categorySchema.pre(['update' , 'findOneAndUpdate','updateOne'], function(next){
     next();
 });
 
-const CategoryModel = model('Category', categorySchema);
+const ProductModel = model('Product', productSchema);
 
-module.exports =  CategoryModel;
+module.exports =  ProductModel;
