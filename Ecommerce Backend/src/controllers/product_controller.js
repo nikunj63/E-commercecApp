@@ -22,6 +22,16 @@ const ProductController = {
         } catch (ex) {
             return res.json({sucess:false , message: ex});
         }
+    },
+    fetchProductByCategory : async function (req , res) {
+        try {
+            const categoryId = req.params.id;
+            const products = await ProductModel.find({category: categoryId});
+            return res.json({sucess: true , data: products});
+
+        } catch (ex) {
+            return res.json({sucess:false , message: ex});
+        }
     }
 };
 
