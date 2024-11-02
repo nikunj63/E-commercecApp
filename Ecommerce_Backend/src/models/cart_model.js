@@ -1,12 +1,12 @@
-const {Schema, model} = require('mongoose');
+const {Schema , model} = require('mongoose')
 
 const  cartItemSchema = new Schema({
-    product: {type:Schema.type.objectId , ref: 'Product'},
+    product: {type: Schema.Types.ObjectId , ref: 'Product'},
     quantity: {type: Number,default:1},
 });
 
 const cartSchema = new Schema({
-    user: {type:Schema.type.objectId , ref:'User' , required: true},
+    user: {type: Schema.Types.ObjectId , ref:'User' , required: true},
     items:{type: [cartItemSchema], default : [] },
     updatedOn: {type: Date},
     createdOn: {type: Date},
@@ -29,6 +29,6 @@ cartSchema.pre(['update' , 'findOneAndUpdate','updateOne'], function(next){
     next();
 });
 
-const CartModel = model('Category', cartSchema);
+const CartModel = model('Cart', cartSchema);
 
 module.exports =  CartModel;
