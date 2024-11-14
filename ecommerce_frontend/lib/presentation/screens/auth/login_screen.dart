@@ -1,3 +1,4 @@
+import 'package:ecommerce_frontend/core/ui.dart';
 import 'package:ecommerce_frontend/presentation/widgets/primary_textField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +28,10 @@ class _LoginScreenState extends State<LoginScreen> {
         child: ListView(
           padding:const  EdgeInsets.all(16),
           children: [
-            const Text(
+             Text(
               "Log In",
-              style:TextStyle(
-                fontSize:32,
-                fontWeight:FontWeight.bold,
-              )
+              style:TextStyles.heading1
+              
             ),
             const SizedBox(height:16),
 
