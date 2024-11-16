@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
              Text(
               "Log In",
-              style:TextStyles.heading1
+              style:TextStyles.heading2
               
             ),
             const SizedBox(height:16),
@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text("Don't Have Account?",style:TextStyle(fontSize:16)),
                   const SizedBox(width:16),
                   CupertinoButton(
-                    child: Text("Sign Up",style: TextStyle(
+                    child:Text("Sign Up",style: TextStyle(
                       fontSize:16
                     ),),
                     padding: EdgeInsets.zero,
