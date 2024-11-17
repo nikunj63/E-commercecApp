@@ -1,4 +1,7 @@
 import 'package:ecommerce_frontend/core/ui.dart';
+import 'package:ecommerce_frontend/presentation/widgets/gap_widget.dart';
+import 'package:ecommerce_frontend/presentation/widgets/link_button.dart';
+import 'package:ecommerce_frontend/presentation/widgets/primary_buttons.dart';
 import 'package:ecommerce_frontend/presentation/widgets/primary_textField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
               style:TextStyles.heading2
               
             ),
-            const SizedBox(height:16),
+            const GapWidget(),
 
             PrimaryTextfield(
               controller: emailController,
@@ -41,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             
 
-            const SizedBox(height:16),
+            const GapWidget(),
 
 
             PrimaryTextfield(
@@ -49,26 +52,33 @@ class _LoginScreenState extends State<LoginScreen> {
               obscureText: true,
                 labelText: "Password"
               ),
-            
-            const SizedBox(height:16),
-            CupertinoButton( 
-              onPressed: (){},
-              color:Colors.blue,
-              child: Text('Log In')
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  LinkButton(
+                    onPressed: (){},
+                    text: "Forgot Password?"
+                    ),
+                ],
               ),
-              const SizedBox(height:16),
+            
+            const GapWidget(),
+
+            PrimaryButton(
+              onPressed: (){},
+              text: "Log In",
+              ),
+              const GapWidget(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("Don't Have Account?",style:TextStyle(fontSize:16)),
                   const SizedBox(width:16),
-                  CupertinoButton(
-                    child:Text("Sign Up",style: TextStyle(
-                      fontSize:16
-                    ),),
-                    padding: EdgeInsets.zero,
-                   onPressed: (){}
-                   )
+                  LinkButton(
+                    onPressed: (){},
+                    text: "Sign Up"
+                    )
                   
                 ],
               )

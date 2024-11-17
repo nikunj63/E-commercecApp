@@ -2,14 +2,24 @@ import 'package:ecommerce_frontend/core/ui.dart';
 import 'package:flutter/cupertino.dart';
 
 class PrimaryButton extends StatelessWidget {
-  const PrimaryButton({super.key});
+  final String text;
+  final Function()? onPressed;  
+
+  const PrimaryButton({
+    super.key,
+    required this.text,
+    this.onPressed,
+    });
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      color:AppColors.accent,
-      child: Text("Log In"), 
-      onPressed: (){}
-      );
+    return SizedBox(
+      width:MediaQuery.of(context).size.width,
+      child: CupertinoButton(
+        color:AppColors.accent,
+        child: Text(text), 
+        onPressed: onPressed,
+        ),
+    );
   }
 }
