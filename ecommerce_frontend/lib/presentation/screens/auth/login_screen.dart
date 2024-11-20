@@ -1,10 +1,12 @@
 import 'package:ecommerce_frontend/core/ui.dart';
+import 'package:ecommerce_frontend/presentation/screens/auth/providers/login_provider.dart';
 import 'package:ecommerce_frontend/presentation/widgets/gap_widget.dart';
 import 'package:ecommerce_frontend/presentation/widgets/link_button.dart';
 import 'package:ecommerce_frontend/presentation/widgets/primary_buttons.dart';
 import 'package:ecommerce_frontend/presentation/widgets/primary_textField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,11 +18,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<LoginProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -39,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const GapWidget(),
 
             PrimaryTextfield(
-              controller: emailController,
+              controller: provider.emailController,
               labelText: "Email Address"
               ),
             
@@ -48,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
             PrimaryTextfield(
-              controller: passwordController,
+              controller: provider.passwordController,
               obscureText: true,
                 labelText: "Password"
               ),
@@ -66,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const GapWidget(),
 
             PrimaryButton(
-              onPressed: (){},
+              onPressed: provider.logIn,
               text: "Log In",
               ),
               const GapWidget(),
