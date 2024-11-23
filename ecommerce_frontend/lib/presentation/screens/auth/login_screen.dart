@@ -4,7 +4,6 @@ import 'package:ecommerce_frontend/presentation/widgets/gap_widget.dart';
 import 'package:ecommerce_frontend/presentation/widgets/link_button.dart';
 import 'package:ecommerce_frontend/presentation/widgets/primary_buttons.dart';
 import 'package:ecommerce_frontend/presentation/widgets/primary_textField.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
-        title: Text("E-CommerceApp")
+        title: const Text("E-CommerceApp")
       ),
       body: SafeArea(
         child: ListView(
@@ -35,10 +34,14 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
              Text(
               "Log In",
-              style:TextStyles.heading2
-              
+              style:TextStyles.heading2 
             ),
             const GapWidget(),
+            (provider.error != "") ? Text(
+              provider.error,
+              style: const  TextStyle(color: Colors.red),
+            ) : const SizedBox(),
+           const  GapWidget(),
 
             PrimaryTextfield(
               controller: provider.emailController,
@@ -69,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             PrimaryButton(
               onPressed: provider.logIn,
-              text: "Log In",
+              text:(provider.isLoading) ? ".....": "Log In",
               ),
               const GapWidget(),
               Row(
