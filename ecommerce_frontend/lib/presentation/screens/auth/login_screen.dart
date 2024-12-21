@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             PrimaryButton(
               onPressed: provider.logIn,
-              text:(provider.isLoading) ? ".....": "Log In",
+              text:(provider.isLoading) ? "...": "Log In",
               ),
               const GapWidget(),
               Row(
