@@ -48,6 +48,8 @@ class LoginProvider with ChangeNotifier {
   }
 
   void logIn()async{
+    if(!formKey.currentState!.validate())return ;
+    
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 

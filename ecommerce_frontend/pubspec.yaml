@@ -39,6 +39,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   flutter_bloc: ^8.1.6
   provider: ^6.1.2
+  email_validator: ^3.0.0
 
 dev_dependencies:
   flutter_test:
