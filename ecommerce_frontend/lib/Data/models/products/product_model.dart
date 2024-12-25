@@ -4,7 +4,7 @@ class ProductModel {
   String? title;
   String? description;
   int? price;
-  List<Null>? image;
+  List<String>? image; // Corrected type here
   String? updatedOn;
   String? createdOn;
 
@@ -25,10 +25,7 @@ class ProductModel {
     description = json['description'];
     price = json['price'];
     if (json['image'] != null) {
-      image = <Null>[];
-      json['image'].forEach((v) {
-        image!.add(new Null.fromJson(v));
-      });
+      image = List<String>.from(json['image']); // Simplified handling
     }
     updatedOn = json['updatedOn'];
     createdOn = json['createdOn'];
@@ -42,7 +39,7 @@ class ProductModel {
     data['description'] = this.description;
     data['price'] = this.price;
     if (this.image != null) {
-      data['image'] = this.image!.map((v) => v.toJson()).toList();
+      data['image'] = this.image; // Directly use the list
     }
     data['updatedOn'] = this.updatedOn;
     data['createdOn'] = this.createdOn;

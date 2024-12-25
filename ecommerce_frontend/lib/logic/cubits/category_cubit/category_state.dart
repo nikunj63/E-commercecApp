@@ -1,5 +1,4 @@
 import 'package:ecommerce_frontend/Data/models/category/category_model.dart';
-import 'package:flutter/foundation.dart';
 
 abstract class CategoryState {
   final List<CategoryModel> categories;
