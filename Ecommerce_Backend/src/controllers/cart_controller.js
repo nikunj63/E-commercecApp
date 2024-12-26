@@ -5,7 +5,7 @@ const CartController = {
     getCartForUser: async function( req, res){
         try {
             const user = req.params.user;
-            const foundCart = await CartModel.findOne({user : user});
+            const foundCart = await CartModel.findOne({user : user}).populate("items.product");
 
             if(!foundCart){
                 return res.json({ sucess: true , data:[]});
@@ -38,13 +38,20 @@ const CartController = {
                 return res.json({sucess: true ,data: newCart,message: "Product added to Cart"});
             };
 
+            // Deleting the item if already exists
+           const deletedItem =  await CartModel.findOneAndUpdate(
+                {user:user,"items.product":product},
+                {$pull:{items:{product:product}}},
+                {new:true}
+            ) 
+
             // If cart alredy exists
             const updatedCart = await CartModel.findOneAndUpdate(
                 {user: user},
                 {$push: {items: {product: product , quantity: quantity}}},
                 {new: true}
-            );
-            return res.json({sucess: true ,data: updatedCart,message: "Product added to Cart"});
+            ).populate("items.product");
+            return res.json({sucess: true ,data: updatedCart.items,message: "Product added to Cart"});
 
         } catch (ex) {
             return res.json({sucess: false ,message:ex});
@@ -58,9 +65,9 @@ const CartController = {
                 {user : user},
                 {$pull : {items : {product : product}}},
                 {new : true},
-            );
+            ).populate("items.product");
 
-            return res.json({sucess: true ,data: updatedCart,message: "Product removed from Cart"});
+            return res.json({sucess: true ,data: updatedCart.items,message: "Product removed from Cart"});
 
 
         } catch (ex) {

@@ -1,8 +1,11 @@
+import 'package:ecommerce_frontend/Data/models/products/product_model.dart';
 import 'package:ecommerce_frontend/presentation/screens/auth/login_screen.dart';
 import 'package:ecommerce_frontend/presentation/screens/auth/providers/login_provider.dart';
 import 'package:ecommerce_frontend/presentation/screens/auth/providers/sign_up_provider.dart';
 import 'package:ecommerce_frontend/presentation/screens/auth/sign_up_screen.dart';
+import 'package:ecommerce_frontend/presentation/screens/cart/cart_screen.dart';
 import 'package:ecommerce_frontend/presentation/screens/home/home_screen.dart';
+import 'package:ecommerce_frontend/presentation/screens/products/products_screen.dart';
 import 'package:ecommerce_frontend/presentation/screens/splash/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +33,16 @@ class Routes{
 
         case SplashScreen.routeName: return CupertinoPageRoute(
           builder: (context) => const SplashScreen(),
+          );
+
+        case ProductsDetailScreen.routeName: return CupertinoPageRoute(
+          builder: (context) =>  ProductsDetailScreen(
+            productModel: settings.arguments as ProductModel,
+          ),
+          );
+
+          case CartScreen.routeName: return CupertinoPageRoute(
+          builder: (context) =>  const CartScreen(),
           );
 
         default: return null;

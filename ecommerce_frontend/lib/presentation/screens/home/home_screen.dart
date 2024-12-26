@@ -4,6 +4,8 @@ import 'package:ecommerce_frontend/presentation/screens/home/user_feed_screen.da
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../cart/cart_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -29,7 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("E-commerce App"),
         actions: [
           IconButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.pushNamed(context, CartScreen.routeName);
+            },
              icon: const Icon(CupertinoIcons.cart_fill),
           )
         ],
