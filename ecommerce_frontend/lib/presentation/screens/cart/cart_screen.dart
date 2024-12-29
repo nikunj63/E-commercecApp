@@ -1,5 +1,6 @@
 import 'package:ecommerce_frontend/logic/cubits/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce_frontend/logic/cubits/cart_cubit/cart_state.dart';
+import 'package:ecommerce_frontend/logic/srevices/formatter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,11 +55,12 @@ class _CartScreenState extends State<CartScreen> {
                       return ListTile(
                         // leading
                       title: Text("${item.product?.title}"),
-                      subtitle: Text("price x quantity = total"),
+                      subtitle: Text("${Formatter.formatPrice(item.product!.price!)}x ${item.quantity} = total"),
                       trailing: InputQty(
                         minVal: 1,
                         initVal: 2, // product initial quantity
                         maxVal: 99,
+                        showMessageLimit: false,
                         onQtyChanged: (value){},
                       ),
                       );
