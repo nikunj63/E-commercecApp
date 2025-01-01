@@ -1,8 +1,10 @@
 
 import 'dart:async';
 
+import 'package:ecommerce_frontend/Data/models/cart/cart_item_model.dart';
 import 'package:ecommerce_frontend/logic/cubits/user_cubit/user_state.dart';
 
+import '../../../Data/models/products/product_model.dart';
 import '../../../Data/repositeries/cart_repository.dart';
 import '../user_cubit/user_cubit.dart';
 import 'cart_state.dart';
@@ -38,6 +40,30 @@ class CartCubit extends Cubit<CartState> {
     }
     catch(ex) {
     emit( CartErrorState (ex.toString(), state.items) );
+      }
+    }
+
+    void addtoCart(ProductModel product, int quantity)async{
+      emit(CartLoadingState(state.items));
+      try {
+        if (_userCubit.state is UserLoggedInState) {
+          UserLoggedInState userState = _userCubit.state as UserLoggedInState;
+
+
+          CartItemModel newItem = CartItemModel(
+         product: product,
+         quantity: quantity 
+        );
+        final items = await _cartRepository.addtoCart(newItem, 
+        userState.userModel.sId!);
+        emit(CartLoadedState(items));
+        }
+        else{
+          throw " An error occured while adding an item!";
+        }
+        
+      } catch (ex) {
+        emit(CartErrorState(ex.toString(), state.items));
       }
     }
 

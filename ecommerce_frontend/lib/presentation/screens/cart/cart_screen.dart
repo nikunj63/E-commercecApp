@@ -1,3 +1,5 @@
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_frontend/logic/cubits/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce_frontend/logic/cubits/cart_cubit/cart_state.dart';
 import 'package:ecommerce_frontend/logic/srevices/formatter.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:input_quantity/input_quantity.dart';
 
 import '../../../core/ui.dart';
+import '../../../logic/srevices/calculation.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -53,15 +56,20 @@ class _CartScreenState extends State<CartScreen> {
 
 
                       return ListTile(
-                        // leading
+                       leading: CachedNetworkImage(
+                        imageUrl: item.product!.image![0]
+                        ),
                       title: Text("${item.product?.title}"),
-                      subtitle: Text("${Formatter.formatPrice(item.product!.price!)}x ${item.quantity} = total"),
+                      subtitle: Text("${Formatter.formatPrice(item.product!.price!)}x ${
+                        item.quantity!} = ${Formatter.formatPrice(item.product!.price! * item.quantity!)}"),
                       trailing: InputQty(
-                        minVal: 1,
-                        initVal: 2, // product initial quantity
                         maxVal: 99,
-                        showMessageLimit: false,
-                        onQtyChanged: (value){},
+                        initVal: item.quantity!, // product initial quantity
+                        minVal: 1,
+                        onQtyChanged: (value){
+                          BlocProvider.of<CartCubit>(context).addtoCart(
+                            item.product!, value as int);
+                        },
                       ),
                       );
                     },
@@ -80,9 +88,11 @@ class _CartScreenState extends State<CartScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                   
-                            Text("5 items",style: TextStyles.body1.
+                            Text("${state.items.length}items",style: TextStyles.body1.
                             copyWith(fontWeight: FontWeight.bold),),
-                            Text("Total: 99895",style: TextStyles.heading3)
+                            Text("Total: ${Formatter.formatPrice(
+                              Calculations.cartTotal(state.items))}",
+                            style: TextStyles.heading3)
                           ],
                         )
                         ),

@@ -5,7 +5,7 @@ class CartItemModel {
   int? quantity;
   String? sId;
 
-  CartItemModel({this.quantity, this.sId});
+  CartItemModel({this.quantity, this.sId, this.product});
 
   CartItemModel.fromJson(Map<String, dynamic> json) {
     product = ProductModel.fromJson(json["product"]);
