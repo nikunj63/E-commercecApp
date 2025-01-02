@@ -32,18 +32,28 @@ class CartCubit extends Cubit<CartState> {
   }
 
   final _cartRepository = CartRepository();
+
+  void sortAndLoad(List<CartItemModel> items){
+    items.sort((a ,b) => a.product!.title!.compareTo(b.product!.
+        title!));
+
+         emit( CartLoadedState (items) );
+  }
+
+
   void _initialize(String userId) async {
     emit( CartLoadingState(state.items) );
     try {
         final items = await _cartRepository.fetchCartForUser(userId);
-         emit( CartLoadedState (items) );
+        sortAndLoad(items);
+        
     }
     catch(ex) {
     emit( CartErrorState (ex.toString(), state.items) );
       }
     }
 
-    void addtoCart(ProductModel product, int quantity)async{
+    void addToCart(ProductModel product, int quantity)async{
       emit(CartLoadingState(state.items));
       try {
         if (_userCubit.state is UserLoggedInState) {
@@ -54,9 +64,9 @@ class CartCubit extends Cubit<CartState> {
          product: product,
          quantity: quantity 
         );
-        final items = await _cartRepository.addtoCart(newItem, 
+        final items = await _cartRepository.addToCart(newItem, 
         userState.userModel.sId!);
-        emit(CartLoadedState(items));
+        sortAndLoad(items);
         }
         else{
           throw " An error occured while adding an item!";
@@ -65,6 +75,38 @@ class CartCubit extends Cubit<CartState> {
       } catch (ex) {
         emit(CartErrorState(ex.toString(), state.items));
       }
+    }
+
+    void removeFromCart(ProductModel product)async{
+      emit(CartLoadingState(state.items));
+      try {
+        if (_userCubit.state is UserLoggedInState) {
+          UserLoggedInState userState = _userCubit.state as UserLoggedInState;
+
+        final items = await _cartRepository.removeFromCart(product.sId!, 
+        userState.userModel.sId!);
+        sortAndLoad(items);
+        }
+        else{
+          throw " An error occured while removing an item!";
+        }
+        
+      } catch (ex) {
+        emit(CartErrorState(ex.toString(), state.items));
+      }
+    }
+
+    bool cartContains(ProductModel product){
+      if (state.items.isNotEmpty) {
+        final foundItem = state.items.where((item)=> item.product!.sId == 
+        product.sId!).toList();
+        if (foundItem.isNotEmpty) {
+          return true;
+        }else{
+          return false;
+        }
+      }
+      return false;
     }
 
     @override

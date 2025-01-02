@@ -29,7 +29,7 @@ class CartRepository {
   }
 
 
-  Future<List<CartItemModel>> addtoCart(CartItemModel cartItem , String userId) async{
+  Future<List<CartItemModel>> addToCart(CartItemModel cartItem , String userId) async{
     try {
       Map<String, dynamic> data = cartItem.toJson();
       data["user"] = userId;

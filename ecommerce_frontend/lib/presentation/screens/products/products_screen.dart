@@ -5,7 +5,11 @@ import 'package:ecommerce_frontend/logic/srevices/formatter.dart';
 import 'package:ecommerce_frontend/presentation/widgets/gap_widget.dart';
 import 'package:ecommerce_frontend/presentation/widgets/primary_buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_carousel_slider/carousel_slider.dart';
+
+import '../../../logic/cubits/cart_cubit/cart_cubit.dart';
+import '../../../logic/cubits/cart_cubit/cart_state.dart';
 
 class ProductsDetailScreen extends StatefulWidget {
   final ProductModel productModel;
@@ -62,10 +66,25 @@ class _ProductsDetailScreenState extends State<ProductsDetailScreen> {
 
                   const GapWidget(size: 10,),
 
-                  PrimaryButton(
-                    onPressed: (){},
-                    text: "Add to Cart"
-                    ),
+                  BlocBuilder<CartCubit , CartState>(
+                    builder: (context,state) {
+                      bool isInCart = BlocProvider.of<CartCubit>(context).cartContains(widget.productModel);
+
+                      return PrimaryButton(
+                        onPressed: (){
+                          if (isInCart) {
+                            return;
+                          }
+                          BlocProvider.of<CartCubit>(context).
+                          addToCart(widget.productModel,1);
+                        },
+                        color:(isInCart
+                        )? AppColors.text : AppColors.accent ,
+                        text: (isInCart
+                        )? "Product Added to Cart":"Add to Cart"
+                        );
+                    }
+                  ),
 
                   const GapWidget(size:10),
 

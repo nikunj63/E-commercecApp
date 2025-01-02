@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String text;
-  final Function()? onPressed;  
+  final Function()? onPressed;
+  final Color? color;  
 
   const PrimaryButton({
     super.key,
     required this.text,
     this.onPressed,
+    this.color
     });
 
   @override
@@ -17,7 +19,7 @@ Widget build(BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width,
     child: CupertinoButton(
-      color: AppColors.accent,
+      color:color?? AppColors.accent,
       child: Text(
         text,
         style: const TextStyle(

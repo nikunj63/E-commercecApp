@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_frontend/logic/cubits/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce_frontend/logic/cubits/cart_cubit/cart_state.dart';
 import 'package:ecommerce_frontend/logic/srevices/formatter.dart';
+import 'package:ecommerce_frontend/presentation/widgets/link_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,6 +44,12 @@ class _CartScreenState extends State<CartScreen> {
               );
             }
 
+            if(state is CartLoadedState && state.items.isEmpty){
+              return const Center(
+                child:Text("Cart Item will show up here...") ,
+              );
+            }
+
 
 
             return Column(
@@ -60,15 +67,30 @@ class _CartScreenState extends State<CartScreen> {
                         imageUrl: item.product!.image![0]
                         ),
                       title: Text("${item.product?.title}"),
-                      subtitle: Text("${Formatter.formatPrice(item.product!.price!)}x ${
-                        item.quantity!} = ${Formatter.formatPrice(item.product!.price! * item.quantity!)}"),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("${Formatter.formatPrice(item.product!.price!)}x ${
+                            item.quantity!} = ${Formatter.formatPrice(item.product!.price! * item.quantity!)}"),
+
+                            LinkButton(
+                              onPressed: (){
+                                BlocProvider.of<CartCubit>(context).removeFromCart(
+                                  item.product!
+                                );
+                              },
+                              text:"Delete",
+                              color: Colors.red,
+                              )
+                        ],
+                      ),
                       trailing: InputQty(
                         maxVal: 99,
                         initVal: item.quantity!, // product initial quantity
                         minVal: 1,
                         onQtyChanged: (value){
-                          BlocProvider.of<CartCubit>(context).addtoCart(
-                            item.product!, value as int);
+                          BlocProvider.of<CartCubit>(context).addToCart(
+                            item.product!, value.toInt());
                         },
                       ),
                       );
