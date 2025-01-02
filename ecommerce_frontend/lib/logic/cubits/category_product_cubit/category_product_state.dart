@@ -5,7 +5,7 @@ abstract class CategoryProductState {
   CategoryProductState(this.products);
 }
 
-class CategoryProductInitialState extends CategoryProductstate {
+class CategoryProductInitialState extends CategoryProductState {
   CategoryProductInitialState() : super([]);
 }
 
