@@ -73,11 +73,7 @@ class _UserFeedScreenState extends State<UserFeedScreen> {
                         ],
                       ),
                     ),
-              
-                    IconButton(
-                      onPressed: (){},
-                      icon: Icon(CupertinoIcons.cart),
-                    ),
+                    
                 ],
               ),
             );
