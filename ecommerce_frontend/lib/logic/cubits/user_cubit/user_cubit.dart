@@ -65,6 +65,21 @@ class UserCubit  extends Cubit<UserState> {
       emit(UserErrorState(ex.toString()));
     }
   }
+
+  Future<bool> updateUser(UserModel userModel)async{
+    emit(UserLoadingState());
+    try {
+      UserModel updatedUser = await _userRepository.updateUser
+      (userModel);
+
+      emit(UserLoggedInState(updatedUser));
+      return true;
+    } catch (e) {
+      emit(UserErrorState(e.toString()));
+      return false;
+    }
+  }
+
   void signOut()async{
     await Preferences.clear();
     emit(UserLoggedOutState());

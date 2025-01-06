@@ -2,6 +2,7 @@ import 'package:ecommerce_frontend/Data/models/user/user_model.dart';
 import 'package:ecommerce_frontend/core/ui.dart';
 import 'package:ecommerce_frontend/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:ecommerce_frontend/logic/cubits/user_cubit/user_state.dart';
+import 'package:ecommerce_frontend/presentation/screens/user/edit_profile_screen.dart';
 import 'package:ecommerce_frontend/presentation/widgets/link_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Text("${userModel.fullName}", style: TextStyles.heading3),
                 Text("${userModel.email}", style: TextStyles.body2,),
                 LinkButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pushNamed(context,EditProfileScreen.routeName);
+                  },
                   text: "Edit Profile",
                 )
               ],
