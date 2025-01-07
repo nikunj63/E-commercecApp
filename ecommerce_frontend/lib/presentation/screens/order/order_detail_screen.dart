@@ -2,14 +2,19 @@ import 'package:ecommerce_frontend/Data/models/user/user_model.dart';
 import 'package:ecommerce_frontend/core/ui.dart';
 import 'package:ecommerce_frontend/logic/cubits/cart_cubit/cart_cubit.dart';
 import 'package:ecommerce_frontend/logic/cubits/cart_cubit/cart_state.dart';
+import 'package:ecommerce_frontend/logic/cubits/order_cubit/order_cubit.dart';
 import 'package:ecommerce_frontend/logic/cubits/user_cubit/user_cubit.dart';
 import 'package:ecommerce_frontend/logic/cubits/user_cubit/user_state.dart';
+import 'package:ecommerce_frontend/presentation/screens/order/order_placed_screen.dart';
+import 'package:ecommerce_frontend/presentation/screens/order/provider/ordre_detail_provider.dart';
 import 'package:ecommerce_frontend/presentation/screens/user/edit_profile_screen.dart';
 import 'package:ecommerce_frontend/presentation/widgets/cart_list_view.dart';
 import 'package:ecommerce_frontend/presentation/widgets/gap_widget.dart';
 import 'package:ecommerce_frontend/presentation/widgets/link_button.dart';
+import 'package:ecommerce_frontend/presentation/widgets/primary_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   const OrderDetailScreen({super.key});
@@ -99,20 +104,49 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
             Text("Payment", style:TextStyles.body2.copyWith(
               fontWeight: FontWeight.bold)),
 
-              RadioListTile(
-                value: "pay-on-Delivery", 
-                groupValue: "var" ,
-                contentPadding: EdgeInsets.zero,
-                onChanged: (value){},
-                title:const  Text("Pay on Deliver"),
-                ),
+              Consumer<OrdreDetailProvider>(
+                builder: (context, provider, child) {
+                  return Column(
+                    children: [
+                      RadioListTile(
+                        value: "pay-on-Delivery", 
+                        groupValue: provider.paymentMethod ,
+                        contentPadding: EdgeInsets.zero,
+                        onChanged: provider.changePaymentMethod,
+                        title:const  Text("Pay on Deliver"),
+                        ),
+                      
+                        RadioListTile(
+                        value: "pay-now", 
+                        groupValue: provider.paymentMethod, 
+                         contentPadding: EdgeInsets.zero,
+                        onChanged: provider.changePaymentMethod,
+                        title: const Text("Pay Now"),
+                        ),
+                    ],
+                  );
+                }
+              ),
 
-                RadioListTile(
-                value: "pay-now", 
-                groupValue: "var", 
-                 contentPadding: EdgeInsets.zero,
-                onChanged: (value){},
-                title: const Text("Pay Now"),
+              const GapWidget(),
+
+              PrimaryButton(
+                onPressed: ()async{
+                  bool success = await BlocProvider.of<OrderCubit>(context).createOrder(
+                    items:BlocProvider.of<CartCubit>(context).state.items,
+                    paymentMethod:Provider.of<OrdreDetailProvider>
+                    (context,listen:false).paymentMethod.toString() ,
+                  );
+
+                  if (success) {
+                    Navigator.popUntil(context, (route)=> route.isFirst) ;
+                    Navigator.pushNamed(context, 
+                    OrderPlacedScreen.routeName,
+                    );
+                  }
+
+                },
+                text: "Place Order",
                 ),
 
 

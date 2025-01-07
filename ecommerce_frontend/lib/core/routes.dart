@@ -7,7 +7,10 @@ import 'package:ecommerce_frontend/presentation/screens/auth/providers/sign_up_p
 import 'package:ecommerce_frontend/presentation/screens/auth/sign_up_screen.dart';
 import 'package:ecommerce_frontend/presentation/screens/cart/cart_screen.dart';
 import 'package:ecommerce_frontend/presentation/screens/home/home_screen.dart';
+import 'package:ecommerce_frontend/presentation/screens/order/my_order_screen.dart';
 import 'package:ecommerce_frontend/presentation/screens/order/order_detail_screen.dart';
+import 'package:ecommerce_frontend/presentation/screens/order/order_placed_screen.dart';
+import 'package:ecommerce_frontend/presentation/screens/order/provider/ordre_detail_provider.dart';
 import 'package:ecommerce_frontend/presentation/screens/products/category_product_screen.dart';
 import 'package:ecommerce_frontend/presentation/screens/products/products_screen.dart';
 import 'package:ecommerce_frontend/presentation/screens/splash/splash_screen.dart';
@@ -62,7 +65,18 @@ class Routes{
           );
 
           case OrderDetailScreen.routeName: return CupertinoPageRoute(
-          builder: (context) =>  const OrderDetailScreen(),
+          builder: (context) =>  ChangeNotifierProvider(
+            create:(context) => OrdreDetailProvider(),
+            child: const OrderDetailScreen(),
+            )
+          );
+
+          case OrderPlacedScreen.routeName: return CupertinoPageRoute(
+          builder: (context) =>  const OrderPlacedScreen(),
+          );
+
+          case MyOrderScreen.routeName: return CupertinoPageRoute(
+          builder: (context) =>  const MyOrderScreen(),
           );
 
 
